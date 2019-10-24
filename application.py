@@ -64,6 +64,18 @@ def login_process():
     if username_from_database is None:  # if no username was matched in the database
         return render_template("error.html", nonexistent_username=True)
 
+    # got the username, but does he/she have the right password?
+    password_from_database = db.execute("SELECT * FROM users WHERE username = :username", {"username": username}).fetchone()
+    # password_from_database = db.execute("SELECT password FROM users WHERE username = :username", {"username": username}) --> doesn't work!!!
+    # password_from_database = db.execute("SELECT password FROM users WHERE username = :username", {"username": username}).fetchone() --> doesn't work as well!!!
+    password_from_database = password_from_database.password  # just get the password, not the entire row
+    # do the hashes match?
+    if not check_password_hash(password_from_database, password):  # returns False if they don't match
+        return render_template("error.html", wrong_password=True)
+
+    # looks like the user has the right username and password, so let the user be logged in
+    return render_template("success.html", foo="logged", username=username)
+
 
 
 if __name__ == "__main__":
