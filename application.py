@@ -25,3 +25,21 @@ Session(app)
 def index():
     return render_template("index.html")
 
+
+@app.route("/register_page")
+def register_page():
+    return render_template("register.html")
+
+
+@app.route("/registration", methods=["POST"])
+def registration():
+    first_name = request.form.get("first_name")
+    last_name = request.form.get("last_name")
+    username = request.form.get("username")
+    password = request.form.get("password")
+    return "<h1>Success!</h1>"
+
+
+if __name__ == "__main__":
+    app.run()
+
