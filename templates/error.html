@@ -1,0 +1,22 @@
+{% extends "_layout.html" %}
+
+{% block title %}Error{% endblock %}
+
+{% block heading %}Some error occurred!{% endblock %}
+
+{% block body %}
+	{% if wrong_password %}
+		<h3>The password is incorrect!</h3>
+	{% endif %}
+
+	{% if username_exists %}
+		<h3>The username already exists!</h3>
+	{% endif %}
+
+	<br/>
+
+	<p>Click the button below to go back to the homepage</p>
+	<a href="{{ url_for('index') }}"><button>Homepage</button></a>
+{% endblock %}
+
+
