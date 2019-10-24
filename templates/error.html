@@ -13,6 +13,9 @@
 		<h3>The username already exists!</h3>
 	{% endif %}
 
+	{% if nonexistent_username %}
+		<h3>The username does not exist!</h3>
+	{% endif %}
 	<br/>
 
 	<p>Click the button below to go back to the homepage</p>

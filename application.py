@@ -48,6 +48,23 @@ def registration():
 
     return render_template("success.html", foo="registered", username=username)
 
+@app.route("/login")
+def login():
+    return render_template("log_in.html")
+
+
+@app.route("/login_process", methods=["POST"])
+def login_process():
+    # grab info from the form
+    username = request.form.get("username")
+    password = request.form.get("password")
+
+    # grab the corresponding username from the database
+    username_from_database = db.execute("SELECT * FROM users WHERE username = :username", {"username": username}).fetchone()
+    if username_from_database is None:  # if no username was matched in the database
+        return render_template("error.html", nonexistent_username=True)
+
+
 
 if __name__ == "__main__":
     app.run()

@@ -5,7 +5,7 @@
 {% block heading %}Log In{% endblock %}
 
 {% block body %}
-	<form action="#" method="post">
+	<form action="{{ url_for('login_process') }}" method="post">
 		<label for="username">Username</label>
 		<input type="text" name="username" id="username"/>
 		<br/>
