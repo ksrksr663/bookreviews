@@ -35,6 +35,13 @@ def register_page():
 
 @app.route("/registration", methods=["POST"])
 def registration():
+    # first have to check if the username does not already exists
+    # if it does, then render the error page
+    username = request.form.get("username")
+    username_from_database = db.execute("SELECT * FROM users WHERE username = :username", {"username": username}).fetchone()
+    if username_from_database is not None:  # then the username already exists!
+        return render_template("error.html", username_exists=True)
+
     # grab user's info from the form
     first_name = request.form.get("first_name")
     last_name = request.form.get("last_name")
