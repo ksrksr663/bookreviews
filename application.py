@@ -25,6 +25,9 @@ db = scoped_session(sessionmaker(bind=engine))
 
 @app.route("/")
 def index():
+    # Start with the user currently logged out if the key never existed
+    if session.get("is_logged_in") is None:
+        session["is_logged_in"] = False
     return render_template("index.html")
 
 
@@ -81,11 +84,16 @@ def login_process():
         return render_template("error.html", wrong_password=True)
 
     # looks like the user has the right username and password, so let the user be logged in
+    session["is_logged_in"] = True
     return render_template("success.html", foo="logged", username=username)
 
 
 @app.route("/search")
 def search():
+    # first check if the user is logged in
+    if session.get("is_logged_in") is False:  # the user is not logged in
+        return render_template("error.html", not_logged_in=True)
+
     return render_template("search.html")
 
 

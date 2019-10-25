@@ -16,6 +16,10 @@
 	{% if nonexistent_username %}
 		<h3>The username does not exist!</h3>
 	{% endif %}
+
+	{% if not_logged_in %}
+		<h3>You are not logged in! Please log in to access this page.</h3>
+	{% endif %}
 	<br/>
 
 	<p>Click the button below to go back to the homepage</p>
