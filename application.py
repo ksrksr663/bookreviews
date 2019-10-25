@@ -45,7 +45,7 @@ def registration():
     # grab user's info from the form
     first_name = request.form.get("first_name")
     last_name = request.form.get("last_name")
-    username = request.form.get("username")
+    # username = request.form.get("username") <- duplicate line of code
     password = request.form.get("password")
     hashed_password = generate_password_hash(password)  # hash the password
 
@@ -82,6 +82,13 @@ def login_process():
 
     # looks like the user has the right username and password, so let the user be logged in
     return render_template("success.html", foo="logged", username=username)
+
+
+@app.route("/search")
+def search():
+    return render_template("search.html")
+
+
 
 
 
