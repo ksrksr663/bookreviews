@@ -1,0 +1,14 @@
+{% extends "_layout.html" %}
+
+{% block title %}Search Results{% endblock %}
+
+{% block heading %}Search Results{% endblock %}
+
+{% block body %}
+	<ol>
+		{% for result in results %}
+			<li>"<strong>{{ result.title }}</strong>" by {{ result.author }}.</li>
+		{% endfor %}
+	</ol>
+{% endblock %}
+

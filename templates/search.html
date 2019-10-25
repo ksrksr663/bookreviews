@@ -11,7 +11,7 @@
 
 	<h2>Use the below search bar to for search books, so that you can rate and review them!</h2>
 
-	<form action="#" method="post">
+	<form action="{{ url_for('search_functionality') }}" method="post">
 		<label for="book_name">Book Name</label>
 		<input type="text" name="book_name" placeholder="Search a book" id="book_name" required/>
 		<button>Search</button>

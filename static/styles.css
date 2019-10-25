@@ -5,9 +5,10 @@
 }
 
 body {
-	/* background: whitesmoke; */
-	background: black;
-	color: white;
+	background: whitesmoke;
+	color: black;
+	/* background: black; */
+	/* color: white; */
 	font-family: 'Ubuntu Mono';
 	line-height: 1.6;
 }
@@ -16,5 +17,9 @@ body {
 	text-align: center;
 	font-weight: bold;
 	padding: 40px 0;
+}
+
+li {
+	margin-left: 65px;
 }
 

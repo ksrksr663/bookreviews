@@ -108,6 +108,17 @@ def log_out():
     return render_template("success.html", foo="logged out", username=session.get("username"))
 
 
+@app.route("/search_functionality", methods=["POST"])
+def search_functionality():
+    """this function does the search functionality, that is, tries to return matching results to whatever
+       the user typed in.
+    """
+    book_name = request.form.get("book_name")  # get the data from the form
+    book_name = book_name.title()  # normalize the data
+    results = db.execute(f"SELECT * FROM books WHERE title LIKE '%{book_name}%'").fetchall()
+    return render_template("search_results.html", results=results)
+
+
 if __name__ == "__main__":
     app.run()
 
