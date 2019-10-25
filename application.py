@@ -85,7 +85,8 @@ def login_process():
 
     # looks like the user has the right username and password, so let the user be logged in
     session["is_logged_in"] = True
-    return render_template("success.html", foo="logged", username=username)
+    session["username"] = username  # set the username key to the value of the current username
+    return render_template("success.html", foo="logged in", username=username)
 
 
 @app.route("/search")
@@ -93,11 +94,18 @@ def search():
     # first check if the user is logged in
     if session.get("is_logged_in") is False:  # the user is not logged in
         return render_template("error.html", not_logged_in=True)
+    if session.get("is_logged_in") is None:  # the user is not logged in
+        return render_template("error.html", not_logged_in=True)
 
-    return render_template("search.html")
+    return render_template("search.html", username=session.get("username"))
 
 
-
+@app.route("/log_out")
+def log_out():
+    """ log the user out and render the success page"""
+    # session.get("is_logged_in") = False -> I think this won't work; TODO: need to clarify
+    session["is_logged_in"] = False
+    return render_template("success.html", foo="logged out", username=session.get("username"))
 
 
 if __name__ == "__main__":
