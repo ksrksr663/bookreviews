@@ -125,7 +125,7 @@ def search_functionality():
     book_name = request.form.get("book_name")  # get the data from the form
     book_name = book_name.title()  # normalize the data
     results = db.execute(f"SELECT * FROM books WHERE title LIKE '%{book_name}%'").fetchall()
-    return render_template("search_results.html", results=results)
+    return render_template("search_results.html", results=results, count=len(results))
 
 
 if __name__ == "__main__":

@@ -10,11 +10,15 @@
 		<h4>Sorry, your search came up empty.</h4>
 		<p>Click <a href="{{ url_for('search') }}">here</a> to go back to the search page.</p>
 	{% else %}
-	<ol>
-		{% for result in results %}
-			<li>"<strong>{{ result.title }}</strong>" by {{ result.author }}.</li>
-		{% endfor %}
-	</ol>
+		<h4>Your search came up with {{ count }} results:</h4>
+		<br/>
+		<ol>
+			{% for result in results %}
+				<li>"<strong>{{ result.title }}</strong>" by {{ result.author }}.</li>
+			{% endfor %}
+		</ol>
+		<br/>
+		<p>Click <a href="{{ url_for('search') }}">here</a> to go back to the search page.</p>
 	{% endif %}
 {% endblock %}
 
