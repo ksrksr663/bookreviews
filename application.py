@@ -128,6 +128,15 @@ def search_functionality():
     return render_template("search_results.html", results=results, count=len(results))
 
 
+@app.route("/book_page/<string:isbn>")
+def book_page(isbn):
+    """
+        This function makes individual pages for each book.
+    """
+    book_info = db.execute("SELECT * FROM books WHERE isbn = :isbn", {"isbn": isbn}).fetchone()
+    return render_template("book_page.html", book=book_info)
+
+
 if __name__ == "__main__":
     app.run()
 
