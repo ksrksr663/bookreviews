@@ -5,8 +5,35 @@
 {% block heading %}{{ book.title }}{% endblock %}
 
 {% block body %}
-	{{ book.title }}
-	<p>Written by {{ book.author }}.</p>
-	<p>Published in {{ book.year }}.</p>
+	<h2>{{ book.title }}</h2>
+	<h3>Written by {{ book.author }}</h3>
+	<h3>Publication Year: {{ book.year }}</h3>
+	<h3>ISBN number: {{ book.isbn }}</h3>
+	<br/>
+
+	<h2>Your Review:</h2>
+	<form action="#" method="post">
+		<label for="rating">Rating: </label>
+		<select name="rating" id="rating" required>
+			<option value=""></option>
+			<option value="1">1</option>
+			<option value="2">2</option>
+			<option value="3">3</option>
+			<option value="4">4</option>
+			<option value="5">5</option>
+		</select>
+		<br/>
+		<br/>
+
+		<textarea rows="5" cols="70" placeholder="What did you think of the book?" name="review" required>
+		</textarea>
+		<br/>
+
+		<button>Submit</button>
+	</form>
+
+	<h2>Reviews by other users:</h2>
+	<p>Blah blah</p>
+
 {% endblock %}
 
