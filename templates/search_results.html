@@ -5,10 +5,16 @@
 {% block heading %}Search Results{% endblock %}
 
 {% block body %}
+	{# {% if results is None %} -> this does not work! #}
+	{% if not results %}
+		<h4>Sorry, your search came up empty.</h4>
+		<p>Click <a href="{{ url_for('search') }}">here</a> to go back to the search page.</p>
+	{% else %}
 	<ol>
 		{% for result in results %}
 			<li>"<strong>{{ result.title }}</strong>" by {{ result.author }}.</li>
 		{% endfor %}
 	</ol>
+	{% endif %}
 {% endblock %}
 
