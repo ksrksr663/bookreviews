@@ -89,14 +89,23 @@ def login_process():
     return render_template("success.html", foo="logged in", username=username)
 
 
+def is_logged_in():
+    """
+    This function checks if the user is logged in. Return True if he/she is logged in.
+    Else, return False.
+    """
+    # check if the user is logged in
+    if session.get("is_logged_in") is False:  # the user is not logged in
+        return False
+    if session.get("is_logged_in") is None:  # the user is not logged in
+        return False
+
+
 @app.route("/search")
 def search():
     # first check if the user is logged in
-    if session.get("is_logged_in") is False:  # the user is not logged in
+    if is_logged_in() is False:  # if not is_logged_in is not working! TODO: check why
         return render_template("error.html", not_logged_in=True)
-    if session.get("is_logged_in") is None:  # the user is not logged in
-        return render_template("error.html", not_logged_in=True)
-
     return render_template("search.html", username=session.get("username"))
 
 
