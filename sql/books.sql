@@ -1,0 +1,8 @@
+CREATE TABLE books (
+	number SERIAL,
+	title VARCHAR NOT NULL,
+	author VARCHAR NOT NULL,
+	year INTEGER NOT NULL,
+	isbn VARCHAR PRIMARY KEY
+);
+

@@ -1,0 +1,7 @@
+CREATE TABLE reviews (
+	id SERIAL PRIMARY KEY,
+	users VARCHAR REFERENCES users,
+	isbn VARCHAR REFERENCES books,
+	reviews VARCHAR NOT NULL
+);
+
