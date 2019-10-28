@@ -5,3 +5,5 @@ CREATE TABLE reviews (
 	reviews VARCHAR NOT NULL
 );
 
+ALTER TABLE reviews ADD COLUMN rating INTEGER CHECK (rating > 0 AND rating < 6);
+
