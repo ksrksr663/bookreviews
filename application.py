@@ -154,9 +154,19 @@ def book_page(isbn):
     book_info = db.execute("SELECT * FROM books WHERE isbn = :isbn", {"isbn": isbn}).fetchone()  # grab the book's info from the database
     # if len(book_info) == 0:  to check if the book exists? Then render an error page
     goodreads_data = goodreads.main(isbn)  # grab the book's number of ratings & its avg rating from Goodreads and return it as a dict
+
     # grab other users' reviews
     user_reviews = db.execute("SELECT * FROM reviews WHERE isbn = :isbn", {"isbn": isbn}).fetchall()
-    return render_template("book_page.html", book=book_info, number_of_ratings=goodreads_data.get('number of ratings'), average_rating=goodreads_data.get('average rating'), user_reviews=user_reviews)
+
+    # if user already submitted a review, then don't render the form
+    # if session.get("username") == user_reviews.username:  # this syntax is so wrong!
+    username_from_database = db.execute("SELECT * FROM reviews WHERE username = :username", {"username": session.get("username")}).fetchone()
+    if username_from_database is None:  # means he/she did not submit a review
+        render_form = True
+    else:
+        render_form = False
+
+    return render_template("book_page.html", book=book_info, number_of_ratings=goodreads_data.get('number of ratings'), average_rating=goodreads_data.get('average rating'), user_reviews=user_reviews, render_form=render_form)
 
 
 if __name__ == "__main__":
