@@ -16,7 +16,7 @@
 	<br/>
 
 	<h2>Your Review:</h2>
-	{% if render_form %}
+	{% if not own_stuff %}
 		<form action="#" method="post">
 			<label for="rating">Rating: </label>
 			<select name="rating" id="rating" required>
@@ -38,6 +38,8 @@
 		</form>
 	{% else %}
 		<p>You already submitted a review.</p>
+		<p>You rated it <em>{{ own_stuff.rating }} stars</em> and wrote:</p>
+		<blockquote>{{ own_stuff.reviews }}</blockquote>
 		<br/>
 	{% endif %}
 

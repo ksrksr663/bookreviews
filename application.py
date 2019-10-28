@@ -160,13 +160,15 @@ def book_page(isbn):
 
     # if user already submitted a review, then don't render the form
     # if session.get("username") == user_reviews.username:  # this syntax is so wrong!
-    username_from_database = db.execute("SELECT * FROM reviews WHERE username = :username", {"username": session.get("username")}).fetchone()
-    if username_from_database is None:  # means he/she did not submit a review
-        render_form = True
-    else:
-        render_form = False
+    username_from_database = db.execute("SELECT * FROM reviews WHERE username = :username AND isbn = :isbn", {"username": session.get("username"), "isbn": isbn}).fetchone()
+    # if username_from_database is not None:  # means he/she did submitted a review
+    #     render_form = True
+    # else:
+    #     render_form = False
+    #     own_rating = username_from_database.rating
+    #     own_review = username_from_database.reviews
 
-    return render_template("book_page.html", book=book_info, number_of_ratings=goodreads_data.get('number of ratings'), average_rating=goodreads_data.get('average rating'), user_reviews=user_reviews, render_form=render_form)
+    return render_template("book_page.html", book=book_info, number_of_ratings=goodreads_data.get('number of ratings'), average_rating=goodreads_data.get('average rating'), user_reviews=user_reviews, own_stuff=username_from_database)
 
 
 if __name__ == "__main__":
