@@ -136,15 +136,23 @@ def search_functionality():
     return render_template("search_results.html", results=results, count=len(results))
 
 
-@app.route("/book_page/<string:isbn>")
+@app.route("/book_page/<string:isbn>", methods=["GET", "POST"])
 def book_page(isbn):
     """
-        This function makes individual pages for each book.
+        This function makes individual pages for each book. This includes calling in the Goodreads API,
+        and rendering the reviews made by other users.
     """
-    book_info = db.execute("SELECT * FROM books WHERE isbn = :isbn", {"isbn": isbn}).fetchone()
+    if request.method == "POST":
+        review = request.form.get("review")
+        username = session.get("username")
+
+
+    book_info = db.execute("SELECT * FROM books WHERE isbn = :isbn", {"isbn": isbn}).fetchone()  # grab the book's info from the database
     # if len(book_info) == 0:  to check if the book exists? Then render an error page
     goodreads_data = goodreads.main(isbn)  # grab the book's number of ratings & its avg rating from Goodreads and return it as a dict
-    return render_template("book_page.html", book=book_info, number_of_ratings=goodreads_data.get('number of ratings'), average_rating=goodreads_data.get('average rating'))
+    # grab other users' reviews
+    user_reviews = db.execute("SELECT * FROM reviews WHERE isbn = :isbn", {"isbn": isbn}).fetchall()
+    return render_template("book_page.html", book=book_info, number_of_ratings=goodreads_data.get('number of ratings'), average_rating=goodreads_data.get('average rating'), user_reviews=user_reviews)
 
 
 if __name__ == "__main__":

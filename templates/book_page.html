@@ -38,7 +38,16 @@
 	</form>
 
 	<h2>Reviews by other users:</h2>
-	<p>Blah blah</p>
+	{% if not user_reviews %}
+		<p>There are no reviews available for this book.</p>
+	{% else %}
+		{% for user in user_reviews %}
+			<hr/>
+			<p>{{ user.username }} rated it {{ user.rating }} and wrote:</p>
+			<blockquote>{{ user.reviews }}</blockquote>
+			<br/>
+		{% endfor %}
+	{% endif %}
 
 	<hr/>
 	<br/>
