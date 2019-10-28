@@ -142,10 +142,14 @@ def book_page(isbn):
         This function makes individual pages for each book. This includes calling in the Goodreads API,
         and rendering the reviews made by other users.
     """
-    if request.method == "POST":
+    if request.method == "POST":  # the user is trying to submit a review
+        # grab info from the form
         review = request.form.get("review")
-        username = session.get("username")
-
+        rating = request.form.get("rating")
+        username = session.get("username")  # grab the username that is currently logged in
+        # insert the review info into the database
+        db.execute("INSERT INTO reviews (username, isbn, reviews, rating) VALUES (:username, :isbn, :review, :rating)", {"username": username, "isbn": isbn, "review": review, "rating": rating})
+        db.commit()  # close the transaction
 
     book_info = db.execute("SELECT * FROM books WHERE isbn = :isbn", {"isbn": isbn}).fetchone()  # grab the book's info from the database
     # if len(book_info) == 0:  to check if the book exists? Then render an error page

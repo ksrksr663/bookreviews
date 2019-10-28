@@ -42,8 +42,7 @@
 		<p>There are no reviews available for this book.</p>
 	{% else %}
 		{% for user in user_reviews %}
-			<hr/>
-			<p>{{ user.username }} rated it {{ user.rating }} and wrote:</p>
+			<p><strong>{{ user.username }}</strong> rated it <em>{{ user.rating }} stars</em> and wrote:</p>
 			<blockquote>{{ user.reviews }}</blockquote>
 			<br/>
 		{% endfor %}
