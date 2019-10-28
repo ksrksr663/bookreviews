@@ -155,8 +155,8 @@ def book_page(isbn):
     # if len(book_info) == 0:  to check if the book exists? Then render an error page
     goodreads_data = goodreads.main(isbn)  # grab the book's number of ratings & its avg rating from Goodreads and return it as a dict
 
-    # grab other users' reviews
-    user_reviews = db.execute("SELECT * FROM reviews WHERE isbn = :isbn", {"isbn": isbn}).fetchall()
+    # grab other users' reviews, and don't include own user's review in the off chance that he/she already submitted a review for this particular book
+    user_reviews = db.execute("SELECT * FROM reviews WHERE isbn = :isbn AND NOT username = :username", {"isbn": isbn, "username": session.get("username")}).fetchall()
 
     # if user already submitted a review, then don't render the form
     # if session.get("username") == user_reviews.username:  # this syntax is so wrong!
