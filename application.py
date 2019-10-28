@@ -7,6 +7,10 @@ from sqlalchemy.orm import scoped_session, sessionmaker
 
 from werkzeug.security import generate_password_hash, check_password_hash
 
+# set up environment variables, so I don't have to manually set them up myself every single time!!!
+import set_environ_var
+set_environ_var.main()
+
 app = Flask(__name__)
 
 # Check for environment variable

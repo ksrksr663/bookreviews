@@ -1,2 +1,5 @@
 flask_session/
 __pycache__/
+
+# add file that holds vital, secret info like my API key and database URL
+set_environ_var.py
