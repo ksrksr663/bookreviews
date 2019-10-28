@@ -11,6 +11,11 @@
 	<h3>ISBN number: {{ book.isbn }}</h3>
 	<br/>
 
+	<h2>Data from <i>Goodreads</i>:</h2>
+	<h3>Number of ratings: {{ number_of_ratings }}</h3>
+	<h3>Average rating: {{ average_rating }}</h3>
+	<br/>
+
 	<h2>Your Review:</h2>
 	<form action="#" method="post">
 		<label for="rating">Rating: </label>
@@ -34,6 +39,10 @@
 
 	<h2>Reviews by other users:</h2>
 	<p>Blah blah</p>
+
+	<hr/>
+	<br/>
+	<p>Click <a href="{{ url_for('search') }}">here</a> to go back to the search page.</p>
 
 {% endblock %}
 

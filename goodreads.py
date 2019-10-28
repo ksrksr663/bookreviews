@@ -24,7 +24,7 @@ def main(ISBN):
     }
     res = requests.get(REQ_URL, params=params)
     res = res.json()
-    print(res)
+    # print(res)
 
     number_of_rating = res['books'][0]['work_ratings_count']
     average_rating = res['books'][0]['average_rating']

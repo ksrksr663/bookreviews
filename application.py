@@ -5,11 +5,15 @@ from flask_session import Session
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 
+# import the below functions so that I can hash and authenticate passwords
 from werkzeug.security import generate_password_hash, check_password_hash
 
 # set up the 'DATABASE_URL' environment variable, so I don't have to manually set them up myself every single time!!!
 import set_environ_var
 set_environ_var.database_url()
+
+# set up the Goodreads module
+import goodreads
 
 app = Flask(__name__)
 
@@ -138,7 +142,9 @@ def book_page(isbn):
         This function makes individual pages for each book.
     """
     book_info = db.execute("SELECT * FROM books WHERE isbn = :isbn", {"isbn": isbn}).fetchone()
-    return render_template("book_page.html", book=book_info)
+    # if len(book_info) == 0:  to check if the book exists? Then render an error page
+    goodreads_data = goodreads.main(isbn)  # grab the book's number of ratings & its avg rating from Goodreads and return it as a dict
+    return render_template("book_page.html", book=book_info, number_of_ratings=goodreads_data.get('number of ratings'), average_rating=goodreads_data.get('average rating'))
 
 
 if __name__ == "__main__":
