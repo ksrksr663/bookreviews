@@ -181,13 +181,18 @@ def api(isbn):
     if book_info is None:  # no book was found
         return jsonify({"error": "Requested ISBN number not in database"}), 404
 
+    # grab the book's avg rating and number of ratings from the Goodreads API
+    goodreads_info = goodreads.main(isbn)  # returns a dict
+    review_count = goodreads_info.get("number of ratings")
+    average_score = goodreads_info.get("average rating")
+
     return jsonify({
         "title": book_info.title,
         "author": book_info.author,
         "year": book_info.year,
         "isbn": book_info.isbn,
-        "review_count": 1,
-        "average_score": 2
+        "review_count": review_count,
+        "average_score": average_score
         })
 
 
