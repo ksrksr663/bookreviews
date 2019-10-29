@@ -1,6 +1,6 @@
 import os
 
-from flask import Flask, session, render_template, request
+from flask import Flask, session, render_template, request, jsonify
 from flask_session import Session
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
@@ -169,6 +169,26 @@ def book_page(isbn):
     #     own_review = username_from_database.reviews
 
     return render_template("book_page.html", book=book_info, number_of_ratings=goodreads_data.get('number of ratings'), average_rating=goodreads_data.get('average rating'), user_reviews=user_reviews, own_stuff=username_from_database)
+
+
+# API access
+@app.route("/api/<string:isbn>", methods=["GET", "POST"])  # remember, isbn is a string, not an int!
+def api(isbn):
+    if request.method == "POST":  # don't allow a POST request to this API endpoint
+        return jsonify({"error": "POST method not allowed"}), 405
+
+    book_info = db.execute("SELECT * FROM books WHERE isbn = :isbn", {"isbn": isbn}).fetchone()
+    if book_info is None:  # no book was found
+        return jsonify({"error": "Requested ISBN number not in database"}), 404
+
+    return jsonify({
+        "title": book_info.title,
+        "author": book_info.author,
+        "year": book_info.year,
+        "isbn": book_info.isbn,
+        "review_count": 1,
+        "average_score": 2
+        })
 
 
 if __name__ == "__main__":
